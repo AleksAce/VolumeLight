@@ -1,6 +1,6 @@
 # VolumeLight
 Note: I didn't know git back when I was coding this.
-Note: Download the full source and open the VolumeLightTest.sln to try it out
+Note: Download the full source and open the VolumeLightTest.sln to try it out. Use ArrowKeys to move.
 Volumetric Light Technique using OpenGL I did some time ago.
 Still not fully 'polished' (very expensive) but the technique is demonstrated.
 
