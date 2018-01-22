@@ -1,4 +1,5 @@
 # VolumeLight
+Note: I didn't know git back when I was coding this.
 Volumetric Light Technique using OpenGL I did some time ago.
 Still not fully 'polished' (very expensive) but the technique is demonstrated.
 
