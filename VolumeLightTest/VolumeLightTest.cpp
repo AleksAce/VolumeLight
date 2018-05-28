@@ -23,6 +23,7 @@ glm::mat4 mProjection, p1Model,p2Model, mvp, testModel;
 glm::mat4 ViewMatrix;
 
 bool Running = false;
+static bool window_is_fullscreen = false;
 
 SDL_Event event;
 glm::vec2 mouseDelta;
@@ -959,26 +960,11 @@ static void CheckMovement(game_input *Input)
 
 		
 }
-
 static glm::vec2 GetMouseDelta(glm::vec2 oldpos, glm::vec2 newpos)
 {
 	return newpos - oldpos;
 }
-static void TestMethod()
-{
-	float steps = 1.0f;
-	glm::vec3 EyePosition = camera_distance;
-	glm::vec3 EyeVector = pointLight.position- camera_distance;
-	glm::vec3 EyeVectorDirection = glm::normalize(EyeVector);
-	float current_trace_steps = 0.0f;
-    glm::vec3 vsteps = EyeVector/EyeVectorDirection;
-	float max_trace_steps = vsteps.x;
-	for (glm::vec3 currentPosition = EyePosition; current_trace_steps <= max_trace_steps; currentPosition += EyeVectorDirection)
-	{
-		current_trace_steps += steps;
-	}
 
-}
  static void RenderGameandUpdate(SDL_Window *Window, int WindowWidth, int WindowHeight,game_state *GameState, game_input *Input)
  {
 	
@@ -1240,7 +1226,7 @@ static void InitGlew()
 
 
 
-static void CheckEvents(game_state *GameState, game_input *NewInput)
+static void CheckEvents(game_state *GameState, game_input *NewInput, SDL_Window *window)
 {
 	while (SDL_PollEvent(&event) != 0)
 	{
@@ -1294,6 +1280,19 @@ static void CheckEvents(game_state *GameState, game_input *NewInput)
 			else if (event.key.keysym.sym == SDLK_ESCAPE)
 			{
 				NewInput->Controllers[0].APP_QUIT.isDown = true;
+			}
+			else if (event.key.keysym.sym == SDLK_F11)
+			{
+				if (!window_is_fullscreen)
+				{
+					window_is_fullscreen = true;
+					SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+				}
+				else
+				{
+					SDL_SetWindowFullscreen(window, 0);
+					window_is_fullscreen = false;
+				}
 			}
 
 		}break;
@@ -1459,7 +1458,7 @@ int main(int argc, char* args[])
 	while (Running)
 	{
 	
-		CheckEvents(&GameState, NewInput);
+		CheckEvents(&GameState, NewInput, window);
 		//DRAW THE GAME
 		RenderGameandUpdate(window, WindowWidth, WindowHeight,&GameState, NewInput);
 		
